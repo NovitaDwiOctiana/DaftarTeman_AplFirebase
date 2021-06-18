@@ -59,7 +59,9 @@ class RecyclerViewAdapter (private val listdata_teman: ArrayList<data_teman>, co
                             val intent = Intent(view.context, UpdateData::class.java)
                             intent.putExtras(bundle)
                             context.startActivity(intent)
-                        } 1 -> {}
+                        } 1 -> {
+                            listener?.onDeleteData(listdata_teman.get(position), position)
+                        }
                         }
                     })
                     alert.create()
@@ -75,7 +77,15 @@ class RecyclerViewAdapter (private val listdata_teman: ArrayList<data_teman>, co
         return listdata_teman.size
     }
 
+    var listener: dataListener? = null
+
     init {
         this.context = context
+        this.listener = context as MyListData
     }
+    interface dataListener {
+        fun onDeleteData(data: data_teman?, position: Int)
+    }
+
+
 }
